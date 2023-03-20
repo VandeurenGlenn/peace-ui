@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/VandeurenGlenn/HNM#readme",
   "dependencies": {
+    "@leofcoin/storage": "^3.3.2",
     "@material/web": "^1.0.0-pre.4",
     "@vandeurenglenn/flex-elements": "^0.1.1",
     "custom-pages": "^0.12.1",
@@ -29,7 +30,9 @@
     "custom-svg-iconset": "^1.0.1",
     "koa-compress": "^5.1.0",
     "lit": "^2.6.1",
-    "niko-home-control": "^0.4.3"
+    "niko-home-control": "^0.4.3",
+    "socket-request-client": "^1.7.3",
+    "socket-request-server": "^1.6.5"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",

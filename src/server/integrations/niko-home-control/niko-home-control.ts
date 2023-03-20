@@ -1,6 +1,9 @@
 import controller from 'niko-home-control';
+import NikoHomeControlLight from './niko-home-control-light.js'
 
 class NikoHomeControl {
+  devices = {};
+
   static defaultOptions = {
     ip: '192.168.1.36',
     port: 8000,
@@ -10,6 +13,19 @@ class NikoHomeControl {
 
   constructor(options = {}) {
     controller.init({...options, ...NikoHomeControl.defaultOptions});
+  }
+
+  async init() {
+    for (const action of await this.listActions()) {
+      this.devices[action.id] = new NikoHomeControlLight(this.executeAction, action)
+    }
+    controller.events.on('listactions', this.#sync.bind(this));
+  }
+
+  #sync(actions: {id, data}[]) {
+    for (const action of actions) {
+      this.devices[action.id].sync(action)
+    }
   }
 
   async listLocations() { return controller.listLocations() }
