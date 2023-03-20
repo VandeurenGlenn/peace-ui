@@ -1,4 +1,5 @@
 import nodeResolve from "@rollup/plugin-node-resolve";
+import typescript from "@rollup/plugin-typescript";
 import {readdir} from 'fs/promises'
 import rimraf from 'rimraf'
 
@@ -28,5 +29,8 @@ export default [{
   output: [{
     dir: 'server/integrations',
     format: 'es'
-  }]
+  }],
+  plugins: [
+    typescript()
+  ]
 }]
