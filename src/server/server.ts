@@ -12,6 +12,8 @@ const integrations = {}
 for (const item of uint8ArrayToObject(await configStore.get('integrations'))) {
   const importee = await import(integrationsManifest[item.integration])
   integrations[item.integration] = new importee.default(item.config)
+
+  await integrations[item.integration].init()
 }
 
 const apiServer = await socketRequestServer({protocol: 'peace-api', port: 6006}, {
