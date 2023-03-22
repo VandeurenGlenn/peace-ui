@@ -15,6 +15,7 @@ for (const item of uint8ArrayToObject(await configStore.get('integrations'))) {
 
   await integrations[item.integration].init()
 }
+console.log(integrations);
 
 const apiServer = await socketRequestServer({protocol: 'peace-api', port: 6006}, {
   config: async ({send}) =>
