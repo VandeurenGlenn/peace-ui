@@ -1,11 +1,11 @@
-import { LeofcoinStorage, Store } from '@leofcoin/storage'
+import LeofcoinStorage, { Store } from '@leofcoin/storage'
 import socketRequestServer from 'socket-request-server'
 import { objectToUint8Array, uint8ArrayToObject } from '../utils.js'
 import integrationsManifest from './../integrations-manifest.js'
 const configStore = new LeofcoinStorage('config', '.peace-ui')
 await configStore.init()
 
-if (!await configStore.has('integrations')) await configStore.put('integrations', objectToUint8Array(['niko-home-control']))
+if (!await configStore.has('integrations')) await configStore.put('integrations', objectToUint8Array([{ integration: 'niko-home-control'}]))
 
 const integrations = {}
 

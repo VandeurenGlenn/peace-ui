@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "api": "node ./server/server.js",
     "serve": "node server.js",
     "watch": "rollup -c -w",
     "build": "rollup -c",
@@ -39,6 +40,7 @@
     "@rollup/plugin-typescript": "^11.0.0",
     "koa": "^2.14.1",
     "koa-static": "^5.0.0",
+    "open": "^9.0.0",
     "rimraf": "^4.4.0",
     "rollup": "^3.19.1"
   }

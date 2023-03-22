@@ -1,4 +1,4 @@
-import SocketRequestClient from 'socket-request-client'
+import SocketRequestClient from './../../node_modules/socket-request-client/src/socket-request-client.js'
 
 export default class Client {
   #client;

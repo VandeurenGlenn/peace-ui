@@ -6,7 +6,10 @@ import './elements/darkmode/element.js'
 
 import '@material/web/fab/fab.js'
 
+
 import '@material/web/fab/fab-extended.js'
+import Client from './client.js'
+
 export default customElements.define('app-shell', class AppShell extends LitElement {
   static get properties() {
     return {
@@ -22,6 +25,8 @@ export default customElements.define('app-shell', class AppShell extends LitElem
 
   async connectedCallback() {
     super.connectedCallback();
+    this.client = await new Client()
+    globalThis.client = this.client
     document.addEventListener('menu-click', () => (this.menuShown = !this.menuShown));
     if (!location.hash) location.hash = '#!/home'
     this.#hashchange()

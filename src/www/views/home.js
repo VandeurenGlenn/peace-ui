@@ -14,13 +14,13 @@ export default customElements.define('home-view', class HomeView extends LitElem
 
   darkmode({detail}) {
     console.log(detail);
-    if (detail === 'dark') {
-      this.renderRoot.querySelector(`img[alt="logo"]`).src = './assets/logo-dark.svg'
-      this.renderRoot.querySelector(`img[alt="banner"]`).src = './assets/banner-dark.svg'
-    } else {
-      this.renderRoot.querySelector(`img[alt="logo"]`).src = './assets/logo.svg'
-      this.renderRoot.querySelector(`img[alt="banner"]`).src = './assets/banner.svg'
-    }
+    // if (detail === 'dark') {
+    //   this.renderRoot.querySelector(`img[alt="logo"]`).src = './assets/logo-dark.svg'
+    //   this.renderRoot.querySelector(`img[alt="banner"]`).src = './assets/banner-dark.svg'
+    // } else {
+    //   this.renderRoot.querySelector(`img[alt="logo"]`).src = './assets/logo.svg'
+    //   this.renderRoot.querySelector(`img[alt="banner"]`).src = './assets/banner.svg'
+    // }
   }
 
   constructor() {
