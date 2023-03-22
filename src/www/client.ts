@@ -4,7 +4,13 @@ export default class Client {
   #client;
 
   constructor() {
-    this.#client = SocketRequestClient('ws://localhost:6006', 'peace-api')
+    this.init()
+    
+    
+  }
+
+  async init() {
+    this.#client = await SocketRequestClient('ws://localhost:6006', 'peace-api')
   }
 
   #request(url: string, params?: object) {

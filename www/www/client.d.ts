@@ -1,6 +1,7 @@
 export default class Client {
     #private;
     constructor();
+    init(): Promise<void>;
     config(): Promise<void>;
     integrations(): Promise<void>;
     supportedIntegrations(): Promise<void>;
