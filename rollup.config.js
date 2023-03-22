@@ -1,9 +1,9 @@
 import nodeResolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import {readdir} from 'fs/promises'
-import rimraf from 'rimraf'
+// import rimraf from 'rimraf'
 
-rimraf.sync('www/*.js')
+// rimraf.sync('www/*.js')
 
 const views = (await readdir('./src/www/views')).map(view => `./src/www/views/${view}`)
 const themes = (await readdir('./src/www/themes')).map(theme => `./src/www/themes/${theme}`)
