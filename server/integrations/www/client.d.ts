@@ -8,4 +8,5 @@ export default class Client {
     changeIntegration(integration: string, config: object): Promise<void>;
     removeIntegration(integration: string): Promise<void>;
     interact(integration: string, id: string, action: string, value: string | number): Promise<void>;
+    devices(): Promise<void>;
 }

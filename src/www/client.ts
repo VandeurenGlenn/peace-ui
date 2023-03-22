@@ -28,4 +28,8 @@ export default class Client {
   async interact(integration: string, id: string, action: string, value: string | number) {
     return this.#request('interact', { integration, id, action, value })
   }
+
+  async devices() {
+    return this.#request('devices')
+  }
 }

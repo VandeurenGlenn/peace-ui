@@ -59,5 +59,12 @@ await socketRequestServer({ protocol: 'peace-api', port: 6006 }, {
     interact: async (params, { send }) => {
         const integration = integrations[params.integration];
         integration.devices[params.id][params.action](params.value);
+    },
+    devices: async ({ send }) => {
+        let devices = [];
+        for (const key of Object.keys(integrations)) {
+            devices = [...integrations[key].integration.devices];
+        }
+        send(devices);
     }
 });
