@@ -13,7 +13,8 @@ class NikoHomeControl {
         controller.init({ ...options, ...NikoHomeControl.defaultOptions });
     }
     async init() {
-        for (const action of await this.listActions()) {
+        const actions = await this.listActions();
+        for (const action of actions.data) {
             this.devices[action.id] = new NikoHomeControlLight(this.executeAction, action);
         }
         controller.events.on('listactions', this.#sync.bind(this));
