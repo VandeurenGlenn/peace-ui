@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "experimentalDecorators": true,
+		"useDefineForClassFields": false,
+    "outDir": "exports",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "types": [
+      "node"
+    ]
+  }
+}

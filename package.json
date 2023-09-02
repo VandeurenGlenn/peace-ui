@@ -1,47 +1,71 @@
 {
-  "name": "peace-ui",
+  "name": "@easy-home/monorepo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
+  "workspaces": [
+    "./packages/*"
+  ],
   "scripts": {
-    "api": "node ./server/server.js",
-    "serve": "node server.js",
-    "watch": "rollup -c -w",
-    "build": "rollup -c",
+    "build": "wireit",
+    "serve": "wireit",
+    "watch": "npm run watch --workspaces --if-present",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "wireit": {
+    "build": {
+      "command": "npm run build --workspaces --if-present",
+      "dependencies": [
+        "build:1",
+        "build:2"
+      ]
+    },
+    "build:1": {
+      "command": "npm run build1 --workspaces --if-present"
+    },
+    "build:2": {
+      "command": "npm run build2 --workspaces --if-present"
+    },
+    "serve": {
+      "command": "node ./packages/core/exports/core.js",
+      "dependencies": [
+        "build"
+      ]
+    }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VandeurenGlenn/HNM.git"
+    "url": "git+https://github.com/VandeurenGlenn/easy-home.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/VandeurenGlenn/HNM/issues"
+    "url": "https://github.com/VandeurenGlenn/easy-home/issues"
   },
-  "homepage": "https://github.com/VandeurenGlenn/HNM#readme",
+  "homepage": "https://github.com/VandeurenGlenn/easy-home#readme",
   "dependencies": {
     "@leofcoin/storage": "^3.3.2",
     "@material/web": "^1.0.0-pre.4",
     "@vandeurenglenn/flex-elements": "^0.1.1",
-    "custom-pages": "^0.12.1",
-    "custom-svg-icon": "^1.0.1",
+    "@vandeurenglenn/lit-elements": "^0.2.8",
     "custom-svg-iconset": "^1.0.1",
     "koa-compress": "^5.1.0",
     "lit": "^2.6.1",
     "niko-home-control": "^0.4.3",
-    "socket-request-client": "^1.7.3",
     "socket-request-server": "^1.6.5"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",
+    "@types/koa": "^2.13.8",
+    "@types/koa-static": "^4.0.2",
+    "@types/node": "^20.5.0",
     "koa": "^2.14.1",
     "koa-static": "^5.0.0",
     "open": "^9.0.0",
     "rimraf": "^4.4.0",
-    "rollup": "^3.19.1"
+    "rollup": "^3.28.0",
+    "wireit": "^0.10.0"
   }
 }

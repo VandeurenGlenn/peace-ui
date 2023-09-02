@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "nodenext",
+    "module": "ESNext",
     "moduleResolution": "nodenext",
     "declaration": true,
     "experimentalDecorators": true,
-    "outDir": "server/integrations",
-    "types": [
-      "node"
-    ]
+		"useDefineForClassFields": false,
+    "outDir": "./exports",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true
   }
 }

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "experimentalDecorators": true,
+		"useDefineForClassFields": false,
+    "outDir": "www",
+    "allowJs": true,
+    "types": [
+      "lit",
+      "@lit-labs/context",
+      "@vandeurenglenn/lit-elements/elements.js"
+    ],
+    "paths": {
+      "@elements": ["./src/elements/*"]
+    }
+  }
+}

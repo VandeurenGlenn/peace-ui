@@ -1,0 +1,45 @@
+{
+	"name": "@easy-home/utils",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"build1": "wireit",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"wireit": {
+		"build1": {
+			"command": "rollup -c",
+			"output": [
+				"exports"
+			],
+			"files": [
+				"src"
+			]
+		}
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@rollup/plugin-typescript": "^11.1.2",
+		"rollup-plugin-auto-exports": "^1.0.2",
+		"tslib": "^2.6.2"
+	},
+	"exports": {
+		".": {
+			"import": "./exports/utils.js",
+			"types": "./exports/utils.d.ts"
+		},
+		"./manifest.js": {
+			"import": "./exports/manifest.js",
+			"types": "./exports/manifest.d.ts"
+		},
+		"./utils.js": {
+			"import": "./exports/utils.js",
+			"types": "./exports/src/utils.d.ts"
+		}
+	},
+	"dependencies": {
+		"@vandeurenglenn/base32": "^1.2.3"
+	}
+}

@@ -1,0 +1,47 @@
+{
+	"name": "@easy-home/entities",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"build2": "rollup -c",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"exports": {
+		".": {
+			"import": "./exports/entities.js",
+			"types": "./exports/entities.d.ts"
+		},
+		"./cover.js": {
+			"import": "./exports/cover.js",
+			"types": "./exports/cover.d.ts"
+		},
+		"./dimmable.js": {
+			"import": "./exports/dimmable.js",
+			"types": "./exports/dimmable.d.ts"
+		},
+		"./dummy.js": {
+			"import": "./exports/dummy.js",
+			"types": "./exports/helpers/dummy.d.ts"
+		},
+		"./entities.js": {
+			"import": "./exports/entities.js",
+			"types": "./exports/entities.d.ts"
+		},
+		"./entity-for.js": {
+			"import": "./exports/entity-for.js",
+			"types": "./exports/helpers/entity-for.d.ts"
+		},
+		"./entity.js": {
+			"import": "./exports/entity.js",
+			"types": "./exports/entity.d.ts"
+		},
+		"./light.js": {
+			"import": "./exports/light.js",
+			"types": "./exports/light.d.ts"
+		}
+	}
+}

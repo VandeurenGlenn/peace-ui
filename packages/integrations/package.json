@@ -1,0 +1,71 @@
+{
+	"name": "@easy-home/integrations",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"build2": "node .build/build.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "^25.0.4",
+		"@rollup/plugin-node-resolve": "^15.2.0",
+		"@types/uuid": "^9.0.2",
+		"rollup-plugin-auto-exports": "^1.0.2",
+		"rollup-plugin-clear": "^2.0.7",
+		"rollup-plugin-sizes": "^1.0.5",
+		"rollup-plugin-ts": "^3.4.4",
+		"tslib": "^2.6.1"
+	},
+	"dependencies": {
+		"@devicefarmer/adbkit": "^3.2.5",
+		"@vandeurenglenn/base32": "^1.2.3",
+		"@vandeurenglenn/niko-home-control": "^1.0.0",
+		"niko-home-control": "^0.4.3"
+	},
+	"exports": {
+		"./manifest.js": {
+			"import": "./exports/manifest.js",
+			"types": "./exports/manifest.d.ts"
+		},
+		"./adb.js": {
+			"import": "./exports/integrations/adb.js",
+			"types": "./exports/integrations/adb/adb.d.ts"
+		},
+		"./cover.js": {
+			"import": "./exports/integrations/cover.js",
+			"types": "./exports/integrations/niko-home-control/entities/cover.d.ts"
+		},
+		"./dimmable.js": {
+			"import": "./exports/integrations/dimmable.js",
+			"types": "./exports/integrations/niko-home-control/entities/dimmable.d.ts"
+		},
+		"./entity.js": {
+			"import": "./exports/integrations/entity.js",
+			"types": "./exports/integrations/entity.d.ts"
+		},
+		"./integration.js": {
+			"import": "./exports/integrations/integration.js",
+			"types": "./exports/integrations/integration.d.ts"
+		},
+		"./just-a-light.js": {
+			"import": "./exports/integrations/just-a-light.js",
+			"types": "./exports/integrations/just-a-light/just-a-light.d.ts"
+		},
+		"./light.js": {
+			"import": "./exports/integrations/light.js",
+			"types": "./exports/integrations/niko-home-control/entities/light.d.ts"
+		},
+		"./niko-home-control.js": {
+			"import": "./exports/integrations/niko-home-control.js",
+			"types": "./exports/integrations/niko-home-control/niko-home-control.d.ts"
+		},
+		"./setup.js": {
+			"import": "./exports/integrations/setup.js",
+			"types": "./exports/integrations/niko-home-control/setup.d.ts"
+		}
+	}
+}

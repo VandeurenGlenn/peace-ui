@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Home</title>
+  <meta name="description" lang="en" content="Easy Home control & automation">
+  <style>
+    app-shell {
+      overflow-y: hidden;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      font-family: system-ui, "Noto Sans", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      color: var(--main-color);
+      background-color: var(--main-background-color, #1c1b1f);
+    }
+
+    html, body {
+      inset: 0;
+      position: relative;
+      margin: 0;
+      background: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-background);
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <app-shell>
+  </app-shell>
+  <script src="./shell.js" type="module"></script>
+</body>
+</html>
