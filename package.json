@@ -7,31 +7,12 @@
     "./packages/*"
   ],
   "scripts": {
-    "build": "wireit",
-    "serve": "wireit",
+    "build": "npm run build-1 --workspaces --if-present && npm run build-2 --workspaces --if-present && npm run build --workspaces --if-present",
+    "start:dev": "npm run build && npm run start --workspaces --if-present",
+    "start": "npm run start --workspaces --if-present",
     "watch": "npm run watch --workspaces --if-present",
+    "setup": "npm i",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "wireit": {
-    "build": {
-      "command": "npm run build --workspaces --if-present",
-      "dependencies": [
-        "build:1",
-        "build:2"
-      ]
-    },
-    "build:1": {
-      "command": "npm run build1 --workspaces --if-present"
-    },
-    "build:2": {
-      "command": "npm run build2 --workspaces --if-present"
-    },
-    "serve": {
-      "command": "node ./packages/core/exports/core.js",
-      "dependencies": [
-        "build"
-      ]
-    }
   },
   "repository": {
     "type": "git",
@@ -65,7 +46,6 @@
     "koa-static": "^5.0.0",
     "open": "^9.0.0",
     "rimraf": "^4.4.0",
-    "rollup": "^3.28.0",
-    "wireit": "^0.10.0"
+    "rollup": "^3.28.0"
   }
 }

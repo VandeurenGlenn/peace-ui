@@ -4,6 +4,35 @@
 
 
 ## Develop
+### quick start
+* clone repo
+* run setup
+* start
+
+### commands
+#### setup
+installs dependencies
+```sh
+npm run setup
+```
+
+#### build
+builds all packages
+```sh
+npm run build
+```
+
+#### start
+just starts
+```sh
+npm run start
+```
+
+#### start:dev
+builds before starting
+```sh
+npm run start:dev
+```
 
 ### Integrations
 see packages/integrations

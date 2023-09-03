@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js'
-import { map } from 'lit/directives/map.js';
 import type { Panel } from '../../context/panels.js';
 import '@vandeurenglenn/lit-elements/toggle-button.js'
 
@@ -18,6 +17,9 @@ export class DashboardPanelCard extends LitElement {
 
   @property()
   headline: string
+
+  @property()
+  type: string
 
   static styles = [
     css`
@@ -50,11 +52,12 @@ export class DashboardPanelCard extends LitElement {
         color: var(--md-sys-color-on-surface-container-high);
 
         padding: 24px;
-        margin-bottom: 24px;  
       }
 
       flex-container {
         overflow-y: auto;
+
+        padding-top: 24px;
       }
     `
   ];
@@ -66,7 +69,7 @@ export class DashboardPanelCard extends LitElement {
         <span>${this.headline}</span>
       </custom-typography>
       <flex-it></flex-it>
-        <custom-icon>lightbulb</custom-icon>
+      <custom-icon icon=${this.type === 'light' ? 'lightbulb' : 'roller_shades'}></custom-icon>
     </flex-row>
     <flex-container>
       <slot></slot>

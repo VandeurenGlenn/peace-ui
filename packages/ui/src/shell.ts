@@ -128,26 +128,45 @@ export default class AppShell extends LitElement {
   }
 
   #onEntityEvent(event) {
-    const logs = this.logs
+    const logs = this.logs || []
 
     logs.push(event)
     this.logs = logs
   }
 
   #onIntegrationEvent(event) {
-    const logs = this.logs
+    const logs = this.logs || []
 
     logs.push(event)
-    this.logs = logs
+    this.logs = logs 
   }
 
   #onEntityStateEvent = (event) => {
     console.log(event);
-    const logs = this.logs
+    if (event.type === 'change') {
+      const entities = Array.from(this.shadowRoot.querySelector('dashboard-view').shadowRoot.querySelectorAll('dashboard-panel'))
+        .reduce((set, panel) => {
+          const els = Array.from(panel.shadowRoot.querySelectorAll(`[uid="${event.entity.uid}"]`))
+          
+          for (const el of els) {
+            set.push(el)
+          }
+          return set
+        }, [])
+
+      for (const entity of entities) {
+        entity.updateState(event.entity)
+      }
+        
+      console.log(entities);
+      
+
+      
+    }
+    const logs = this.logs || []
 
     logs.push(event)
     this.logs = logs
-    
   }
 
   constructor() {
@@ -200,8 +219,7 @@ export default class AppShell extends LitElement {
 
     (async () => {
       const logs = await this.client.logs()
-      
-      this.logs = logs || []
+      this.logs = logs?.length ? logs : []
     })();
   }
 

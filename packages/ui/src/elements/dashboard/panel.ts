@@ -58,7 +58,7 @@ export class DashboardPanel extends LitElement {
 
   #renderLights() {
     return this.lights?.length > 0 ? html`
-      <dashboard-panel-card headline="lights">
+      <dashboard-panel-card headline="lights" type="light">
         ${map(this.lights, item => html`
           ${item.type === 'dimmable' ? html`
             <dimmable-element
@@ -86,7 +86,7 @@ export class DashboardPanel extends LitElement {
 
   #renderCovers() {
     return this.covers?.length > 0 ? html`
-      <dashboard-panel-card headline="covers">
+      <dashboard-panel-card headline="covers" type="cover">
         ${map(this.covers, item => html`
           <cover-element
           .id=${item.id}

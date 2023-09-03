@@ -12,13 +12,13 @@ import { logs } from '@easy-home/logging'
 // console.log(adbCommand);
 
 declare global {
-  var easyHome: {
-    integrationSetups
-  }
   var pubsub: LittlePubSub;
 }
-
-globalThis.pubsub = globalThis.pubsub || new LittlePubSub(true)
+globalThis.easyHome = globalThis.easyHome ||
+{
+  logs: []
+}
+globalThis.pubsub = globalThis.pubsub || new LittlePubSub()
 
 declare type Response = {
   send: (data: any, status?: number) => void
@@ -51,7 +51,7 @@ class ApiServer {
       protocol: SOCKET_API_PROTOCOL, port: SOCKET_API_PORT
     }, {
       logs: async ({send}) => {
-        send(logs)
+        send(logs.slice(-100))
       }
         ,
       // Todo: what should be in config?
@@ -165,6 +165,24 @@ class ApiServer {
     await this.integrationsController.startIntegrations()
     pubsub.publish('easy-home-server-ready', true)
     this.starting = false
+    pubsub.subscribe('entity-state-action', state => {
+      console.log({state});
+      const entityInfo = this.integrationsController.entityController.getEntity(state.uid)
+      console.log(entityInfo);
+      if (entityInfo.integration && entityInfo.entityId) {
+        const entity = this.integrations[entityInfo.integration].entities[entityInfo.entityId]
+        console.log(entity);
+        
+        try {
+          entity.updateState(state)
+          console.log(entity);
+        } catch (error) {
+          pubsub.publish('entity-error', error)
+        }
+      }
+      
+    })
+    
   }
   
 }

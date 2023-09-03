@@ -118,6 +118,7 @@ export default class LogsView extends LitElement {
           <md-divider></md-divider>
         `)}
       </flex-container>
+    
       `
   }
 }

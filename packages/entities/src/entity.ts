@@ -20,6 +20,10 @@ export default (base = Dummy) => class Entity extends base {
     if (state.online) this.online = state.online
   }
 
+  setState(state) {
+    if (state.online) this.online = state.online
+  }
+
   toJson() {
     return {
       type: this.type,

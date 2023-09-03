@@ -3,17 +3,15 @@ import { objectToUint8Array, uint8ArrayToObject } from '@easy-home/utils/utils.j
 import { Entities, IntegrationConfigEntry, IntegrationsConfig, IntegrationSetup, IntegrationSetups } from '@easy-home/types'
 import integrationsManifest from '@easy-home/integrations/manifest.js'
 import { logEntityAdded, logEntityLoaded, logIntegrationError, logIntegrationEvent, logIntegrationLoaded, logIntegrationRestart, logIntegrationStarted, logIntegrationStopped } from '@easy-home/logging'
+import EntityController from './entity.js'
 const configStore = new LeofcoinStorage('config', '.peace-ui')
 await configStore.init()
 
-await configStore.put('integrations', objectToUint8Array({}))
 if (!await configStore.has('integrations')) await configStore.put('integrations', objectToUint8Array({}))
 if (!await configStore.has('panels')) await configStore.put('panels', objectToUint8Array([]))
 
-
-
-
 export default class IntegrationsController {
+  entityController = new EntityController()
   integrations: {
     [index: string]: {
       entities: Entities,
@@ -46,9 +44,6 @@ export default class IntegrationsController {
   async init() {
     this.integrationsConfig = uint8ArrayToObject(await configStore.get('integrations'))
     this.panelsConfig = uint8ArrayToObject(await configStore.get('panels'))
-
-
-
     // soft clean interval
     // Todo: should we up time more and base clean on memory usage?
     const cleanup = () => {
@@ -78,8 +73,10 @@ export default class IntegrationsController {
       
       for (const entity of Object.values(this.integrations[integration].entities)) {
         if (entities?.[String(entity.id)]) {
+          this.entityController.addEntity({...entity, integration})
           logEntityLoaded(`${integration}.${entity.type}.${entity.name}`)
         } else {
+          this.entityController.addEntity({...entity, integration})
           logEntityAdded(`${integration}.${entity.type}.${entity.name}`)
           logEntityLoaded(`${integration}.${entity.type}.${entity.name}`)
         }
@@ -96,8 +93,8 @@ export default class IntegrationsController {
   }
 
   async validateIntegrationConfig({integration, config, step}: {integration: string, config, step?}) {
-    console.log(step);
     
+    const errors = []
     if (!integration) {
       // Todo: should fire error
       console.error('integration undefined')
@@ -110,7 +107,7 @@ export default class IntegrationsController {
       errors.push(new Error(`${integration}: integration already setup`))
     }
 
-    const errors = []
+    
     const setup = {...await this.getIntegrationSetup(integration)}
     if (step !== undefined) setup.entries = [setup.entries[step]]
     console.log(setup.entries);

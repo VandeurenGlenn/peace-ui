@@ -4,7 +4,7 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"build1": "rollup -c",
+		"build-1": "rollup -c",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],

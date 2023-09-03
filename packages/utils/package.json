@@ -3,19 +3,8 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"build1": "wireit",
+		"build-1": "rollup -c",
 		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"wireit": {
-		"build1": {
-			"command": "rollup -c",
-			"output": [
-				"exports"
-			],
-			"files": [
-				"src"
-			]
-		}
 	},
 	"keywords": [],
 	"author": "",

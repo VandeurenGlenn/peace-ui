@@ -9,11 +9,25 @@ export default (base = Dummy) => {
     
     constructor(data) {
       super(data)
-      this.brightness = data.brightness
+      this.brightness = Number(data.brightness)
+    }
+
+    setBrightness() {
+      console.warn(`missing setBrightness implementation ${this}`);
     }
 
     updateState(state) {
+      const brightness = Number(state.brightness)
       super.updateState(state)
+      // handle dim changes ignore ison state
+      if (brightness && brightness !== this.brightness) {
+        this.brightness = brightness
+        this.setBrightness()
+      }
+    }
+
+    setState(state: any): void {
+      super.setState(state)
       if (state.brightness) this.brightness = state.brightness
     }
 

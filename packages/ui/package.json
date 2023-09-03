@@ -4,19 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "wireit",
-    "watch": "wireit",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "wireit": {
-    "build": {
-      "command": "rollup -c",
-      "output": [],
-      "files": []
-    },
-    "watch": {
-      "command": "rollup -c -w"
-    }
   },
   "keywords": [],
   "author": "",
@@ -30,6 +20,7 @@
     "socket-request-client": "^2.0.5"
   },
   "dependencies": {
+    "@lit-labs/virtualizer": "^2.0.7",
     "@vandeurenglenn/flex-elements": "^1.0.3",
     "custom-element-decorator": "^0.6.0",
     "javascript-time-ago": "^2.5.9"

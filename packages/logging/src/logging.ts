@@ -2,10 +2,13 @@ import LittlePubSub from '@vandeurenglenn/little-pubsub'
 
 declare global {
   var pubsub: LittlePubSub;
-  var easyHome
+  var easyHome: {
+    integrationSetups?
+    logs: any[]
+  }
 }
 
-globalThis.pubsub = globalThis.pubsub || new LittlePubSub(true)
+globalThis.pubsub = globalThis.pubsub || new LittlePubSub()
 globalThis.easyHome = globalThis.easyHome ||
 {
   logs: []

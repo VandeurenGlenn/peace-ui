@@ -4,20 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "wireit",
+    "build": "rollup -c",
+    "start": "node ./exports/core.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "wireit": {
-    "build": {
-      "command": "rollup -c",
-      "output": [
-        "exports/*"
-      ],
-      "files": [
-        "src/*",
-        "./../integrations/src/*"
-      ]
-    }
   },
   "keywords": [],
   "author": "",

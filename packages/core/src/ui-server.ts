@@ -22,7 +22,7 @@ export default class UiServer {
       },
       br: false // disable brotli
     }))
-    ui.use(koaStatic('./packages/ui/www'))
+    ui.use(koaStatic('./../ui/www'))
     ui.listen(8080, () => {
       console.log('listening on 8080');
       

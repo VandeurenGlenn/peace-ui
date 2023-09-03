@@ -4,7 +4,7 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"build2": "node .build/build.js",
+		"build-2": "node .build/build.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],

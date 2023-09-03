@@ -1,5 +1,6 @@
 import { Dimmable } from "@easy-home/entities";
 import NikoHomeControl from "../niko-home-control.js";
+import { LightState } from "@easy-home/types";
 
 /**
  * Representation of a niko home control light
@@ -40,14 +41,34 @@ export default class NikoHomeControlDimmable extends Dimmable() {
     this.executeAction(this.id, 0)
   }
 
+  setBrightness() {
+    // get internall state (updated before function is run)
+    // 0-100
+    const value = this.brightness
+    this.executeAction(this.id, value)
+  }
+
   /**
    * 
    * @param state see niko-home-control
    */
   updateState(data: any): void {
-    super.updateState({
+    super.updateState(this.transform(data))
+  }
+
+  setState(data: any): void {
+    super.setState(this.transform(data))
+  }
+
+  /**
+   * transforms to easy-home readable properties
+   * @param data {} integration specific data 
+   * @returns 
+   */
+  transform(data: any): {brightness: number, isOn: boolean} {
+    return {
       brightness: data.value1,
       isOn: data.value1 > 0,
-    })
+    }
   }
 }

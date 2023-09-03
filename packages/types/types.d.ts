@@ -3,26 +3,32 @@ export declare type DeviceInfo = {
   version?: string
 }
 
-export declare type Cover = {
-  deviceInfo?: DeviceInfo
+export declare interface Entity {
   uid: string
   name: string
   id: string
-  isOpen: boolean
-  type: 'cover'
-  position: number
   config?: {}
+  deviceInfo?: DeviceInfo
 }
 
-export declare type Light = {
-  deviceInfo?: DeviceInfo
-  type: 'light' | 'dimmable'
-  uid: string
-  name: string
-  id: string
+export declare interface CoverState extends Entity {
+  position: number
+}
+
+export declare interface Cover extends CoverState {
+  isOpen: boolean
+  type: 'cover'
+  updateState: (state: CoverState) => void
+}
+
+export declare interface LightState extends Entity {
   isOn: boolean
   brightness?: number
-  config?: {}
+}
+
+export declare interface Light extends LightState {
+  type: 'light' | 'dimmable'
+  updateState: (state: LightState) => void
 }
 
 export declare type Camera = {
@@ -32,6 +38,7 @@ export declare type Camera = {
   id: string
   name: string
   config?: {}
+  updateState: (state: {}) => void
 }
 
 export declare type Doorbell = {
@@ -42,6 +49,7 @@ export declare type Doorbell = {
   type: 'doorbell'
   hasCamera?: boolean
   config: {}
+  updateState: (state: {}) => void
 }
 
 export declare type Entities = {

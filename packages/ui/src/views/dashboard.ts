@@ -9,6 +9,8 @@ import '@material/web/dialog/dialog.js'
 import '@vandeurenglenn/lit-elements/typography.js'
 
 import './../entities/dimmable.js'
+import './../entities/light.js'
+import './../entities/cover.js'
 import { MdDialog } from '@material/web/dialog/dialog.js'
 declare global {
   interface HTMLElementTagNameMap {
