@@ -270,6 +270,7 @@ export default class AppShell extends LitElement {
         <span name="cloud_sync">@symbol-cloud_sync</span>
         <span name="autoplay">@symbol-autoplay</span>
         <span name="roller_shades">@symbol-roller_shades</span>
+        <span name="delete">@symbol-delete</span>
         <span name="roller_shades_closed">@symbol-roller_shades_closed</span>
         <span name="filled_lightbulb">@filledsymbol-lightbulb</span>
       </template>

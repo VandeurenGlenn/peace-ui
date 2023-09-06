@@ -37,6 +37,8 @@ export default class Client {
 
   async startIntegration(integration: string) { return this.#request('startIntegration', { integration }) }
 
+  async stopIntegration(integration: string) { return this.#request('stopIntegration', { integration }) }
+
   async restartIntegration(integration: string) { return this.#request('restartIntegration', { integration }) }
   
   async changeIntegration(integration: string, config: object) { return this.#request('changeIntegration', { integration, config }) }

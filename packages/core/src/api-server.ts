@@ -80,6 +80,14 @@ class ApiServer {
           send({error: error.errors ? error.errors.map(error => error.message) : error})
         }
       },
+      stopIntegration: async (params, {send}) => {
+        try {
+          await this.integrationsController.unloadIntegration(params.integration)
+          send('ok')
+        } catch (error) {
+          send({error})
+        }
+      },
       addIntegration: async (params, {send}) => {
         try {
           // check if the intergation is valid before adding it
