@@ -18,7 +18,7 @@ const setup: IntegrationSetup = {
       },
       {
         description: 'ip/hostname of the integration?',
-        name: 'ip',
+        name: 'host',
         value: '0.0.0.0',
         validate: (value: string) => {
           if (isIP(value) === 0) return { error: `${value} is not a valid ip` }

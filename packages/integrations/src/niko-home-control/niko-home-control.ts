@@ -58,7 +58,7 @@ class NikoHomeControl extends Integration {
   }
 
   async start() {
-    this.controller = new Controller({...this.options, ...NikoHomeControl.defaultOptions});
+    this.controller = new Controller({...NikoHomeControl.defaultOptions, ...this.options});
     await this.controller.connect()
     await this.getEntities()
     await this.controller.startEvents()
