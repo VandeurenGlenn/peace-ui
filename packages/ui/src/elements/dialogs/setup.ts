@@ -123,7 +123,8 @@ export class SetupDialog extends LitElement {
 
   #done = async () => {
     this.#reset()
-    this.open = false
+    this.shadowRoot.querySelector('md-dialog').close()
+    location.hash = `#!/integrations/integration?selected=${this.integration}`
   }
 
   #lastStep = async () => {

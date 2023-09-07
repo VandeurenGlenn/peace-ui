@@ -124,14 +124,14 @@ export default class Router {
       
       switch (route) {
         case 'integration':
-          if (!this.host.supportedIntegrations || !this.host.integrations) {
+          
             promises.push((async () => {
               this.host.integrations = await this.host.client.integrations()
             })(),
             (async () => {
               this.host.supportedIntegrations = await this.host.client.supportedIntegrations()
             })())
-          }
+          
           await Promise.all(promises)
           this.host.integration = {}
           

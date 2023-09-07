@@ -47,6 +47,8 @@ export default class AppShell extends LitElement {
 
   mainDrawerId: string
 
+  serverStarted: boolean
+
   /**
    * context Providers
    */
@@ -127,16 +129,24 @@ export default class AppShell extends LitElement {
     return this.renderRoot.querySelector('custom-selector')
   }
 
-  #onEntityEvent(event) {
+  #onEntityEvent = (event) => {
     const logs = this.logs || []
 
     logs.push(event)
     this.logs = logs
   }
 
-  #onIntegrationEvent(event) {
+  #onIntegrationEvent = async (event) => {
     const logs = this.logs || []
-
+    if (event.type === 'start' && this.serverStarted) {
+      // add entities manual
+      const entities = await this.client.entities()
+      if (entities[event.integration]) {
+        const _entities = this.entities
+        _entities[event.integration] = entities[event.integration]
+        this.entities = _entities
+      }
+    }
     logs.push(event)
     this.logs = logs 
   }
@@ -204,14 +214,13 @@ export default class AppShell extends LitElement {
     this.router = new Router(this)
     this.loading = false
 
-    const started = await this.client.started()
-    if (!started) {
+    this.serverStarted = await this.client.started()
+    if (!this.serverStarted) {
       this.client.pubsub.subscribe('easy-home-server-ready', async () => {
-
         this.entities = await this.client.entities()
+        this.serverStarted = true
       })
     } else {
-
       this.entities = await this.client.entities()
     };
 
