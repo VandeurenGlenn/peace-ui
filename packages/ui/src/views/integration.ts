@@ -36,6 +36,15 @@ export default class IntegrationView extends LitElement {
       padding-left: 24px;
     }
   `]
+
+  #remove = async () => {
+    try {
+      await globalThis.client.removeIntegration(this.integration.name)
+      location.hash = '#!/integrations'
+    } catch (error) {
+      alert(error)
+    }
+  }
   
   render() {
     return html`
@@ -76,7 +85,7 @@ export default class IntegrationView extends LitElement {
 
         <flex-it></flex-it>
 
-        <md-outlined-button @click=${() => globalThis.client.removeIntegration(this.integration.name)}>
+        <md-outlined-button @click=${this.#remove}>
           <custom-icon slot="icon" icon="delete"></custom-icon>
           remove
         </md-outlined-button>

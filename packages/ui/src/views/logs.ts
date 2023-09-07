@@ -66,8 +66,6 @@ export default class LogsView extends LitElement {
   #click(event) {
     const target = event.composedPath()
       .filter(target => target.localName === 'integration-log' || target.localName === 'entity-log')[0]
-    console.log(event.target);
-    console.log(event.composedPath());
     
     console.log(target);
     if (target.localName === 'integration-log') {

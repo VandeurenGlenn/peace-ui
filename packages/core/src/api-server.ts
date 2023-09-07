@@ -85,7 +85,7 @@ class ApiServer {
           await this.integrationsController.unloadIntegration(params.integration)
           send('ok')
         } catch (error) {
-          send({error})
+          send({error: error.message})
         }
       },
       addIntegration: async (params, {send}) => {
@@ -95,7 +95,7 @@ class ApiServer {
           await this.integrationsController.addIntegration(params.integration, params.config)
           send('ok')
         } catch (error) {
-          send({error})
+          send({error: error.message})
         }
       },
       loadIntegration: async (params, {send}) => {
@@ -103,7 +103,7 @@ class ApiServer {
           await this.integrationsController.loadIntegration(params.integration)
           send('ok')
         } catch (error) {
-          send({error})
+          send({error: error.message})
         }
       },
       startIntegration: async (params, {send}) => {
@@ -116,7 +116,7 @@ class ApiServer {
           // }
           send('ok')
         } catch (error) {
-          send({error})
+          send({error: error.message})
         }
       },
       restartIntegration: async (params, {send}) => {
@@ -140,8 +140,11 @@ class ApiServer {
           await this.integrationsController.removeIntegration(params.integration)
           send('ok')
         } catch (error) {
-          send({error})
+          send({error: error.message})
         }
+      },
+      integrationRunning: async (params, {send}) => {
+        send(await this.integrationsController.integrationRunning(params.integration))
       },
       interact: async (params, {send}) => {
         const integration = this.integrations[params.integration]

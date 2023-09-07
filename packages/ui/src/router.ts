@@ -55,16 +55,9 @@ export default class Router {
     globalThis.onhashchange = () => {
       const hash = location.hash
       const url = new URL(hash.split('#!/')[1], location.origin)
-      
-      // for (const e of  url.searchParams.entries()) {
-      //   console.log(e);
-      // }
-      console.log(url.pathname.split('/')[1]);
-      
       const routeInfo = Router.routes[url.pathname.split('/')[1]]
       const paths = url.pathname.split('/')
       paths.shift()
-      
 
       const selection = url.searchParams.get('selected')
       const selected = paths.join('/')
@@ -120,9 +113,6 @@ export default class Router {
     this.host.pages.select(firstPath, selection)
     this.host.selector.select(firstPath)
     let previous = this.host.pages.querySelector(`[route="${firstPath}"]`)
-    // console.log(paths && i === paths.length - 1 );
-    console.log({paths});
-    console.log(previous);
     
     // maybe this is weird and better handled by setting a defaultSelected on the selected element
     if (paths.length === 0 && previous.select) previous.select(firstPath)
@@ -146,7 +136,7 @@ export default class Router {
           this.host.integration = {}
           
           this.host.integration = {...this.host.integrations[selection], ...this.host.supportedIntegrations[selection], originalName: selection}
-          await previous.requestUpdate()
+          // await previous.requestUpdate()
           break;
         default:
           break;

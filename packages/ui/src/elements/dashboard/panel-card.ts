@@ -71,7 +71,7 @@ export class DashboardPanelCard extends LitElement {
       <flex-it></flex-it>
       <custom-icon icon=${this.type === 'light' ? 'lightbulb' : 'roller_shades'}></custom-icon>
     </flex-row>
-    <flex-container>
+    <flex-container style="display: block;">
       <slot></slot>
     </flex-container>
     `;

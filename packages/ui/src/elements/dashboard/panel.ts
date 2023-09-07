@@ -17,26 +17,19 @@ declare global {
 export class DashboardPanel extends LitElement {
   @consume({context: EntitiesContext, subscribe: true})
   set entities(value: Entities) {
-    console.log(value);
-    
     const lights = []
     const covers = []
     if (value) {
       for (const [integration, entities] of Object.entries(value)) {
-        
-        console.log(entities);
-        
         // @ts-ignore
         for (const entity of entities) {
           if (entity.type === 'light' || entity.type === 'dimmable') lights.push(entity)
           if (entity.type === 'cover') covers.push(entity)
         }
       }
-    }
-
+    };
     this.lights = lights
     this.covers = covers
-    
   }
 
   @property({ type: Array})

@@ -70,7 +70,7 @@ export default class IntegrationsController {
     try {
       await this.integrations[integration].start()
       const entities = this.integrationsConfig[integration].entities
-      
+      this.integrations[integration].running = true
       for (const entity of Object.values(this.integrations[integration].entities)) {
         if (entities?.[String(entity.id)]) {
           this.entityController.addEntity({...entity, integration})
@@ -82,7 +82,8 @@ export default class IntegrationsController {
         }
         
       }
-      this.panelsConfig = this.integrations[integration].entities
+      // todo save default panel config
+      // this.panelsConfig = this.integrations[integration].entities
       logIntegrationStarted(integration)
     } catch (error) {
       console.log({error});
@@ -155,11 +156,15 @@ export default class IntegrationsController {
   }
 
   async removeIntegration (integration) {
-    if (!integration) throw Error('remove: integration undefined')
+    if (!integration) throw new Error('remove: integration undefined')
     this.unloadIntegration(integration)
     this.unloadIntegrationConfig(integration)
 
     await configStore.put('integrations', objectToUint8Array(this.integrationsConfig))
+  }
+
+  integrationRunning(integration) {
+    return this.integrations[integration].running
   }
 
   /**

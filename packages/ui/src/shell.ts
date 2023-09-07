@@ -144,21 +144,24 @@ export default class AppShell extends LitElement {
   #onEntityStateEvent = (event) => {
     console.log(event);
     if (event.type === 'change') {
-      const entities = Array.from(this.shadowRoot.querySelector('dashboard-view').shadowRoot.querySelectorAll('dashboard-panel'))
-        .reduce((set, panel) => {
-          const els = Array.from(panel.shadowRoot.querySelectorAll(`[uid="${event.entity.uid}"]`))
-          
-          for (const el of els) {
-            set.push(el)
-          }
-          return set
-        }, [])
+      const dashboard = this.shadowRoot.querySelector('dashboard-view')
+      if (dashboard.shadowRoot) {
+        const entities = Array.from(dashboard.shadowRoot.querySelectorAll('dashboard-panel'))
+          .reduce((set, panel) => {
+            const els = Array.from(panel.shadowRoot.querySelectorAll(`[uid="${event.entity.uid}"]`))
+            
+            for (const el of els) {
+              set.push(el)
+            }
+            return set
+          }, [])
+  
+        for (const entity of entities) {
+          entity.updateState(event.entity)
+        }
+        console.log(entities);
 
-      for (const entity of entities) {
-        entity.updateState(event.entity)
       }
-        
-      console.log(entities);
       
 
       
@@ -200,21 +203,16 @@ export default class AppShell extends LitElement {
 
     this.router = new Router(this)
     this.loading = false
-    if (!location.hash) location.hash = '#!/dashboard';
 
     const started = await this.client.started()
-    console.log({started});
-    
     if (!started) {
       this.client.pubsub.subscribe('easy-home-server-ready', async () => {
 
         this.entities = await this.client.entities()
-        console.log({entities: this.entities});
       })
     } else {
 
       this.entities = await this.client.entities()
-      console.log({entities: this.entities});
     };
 
     (async () => {
