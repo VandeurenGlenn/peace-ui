@@ -25,23 +25,20 @@ class DimmableElement extends Dimmable(LitElement) {
   brightness: number
 
   protected willUpdate(_changedProperties) {
-    console.log(_changedProperties.get('isOn') !== this.isOn);
+    if (!this.hasUpdated) return
     
-    if (_changedProperties.has('isOn') && _changedProperties.get('isOn') !== this.isOn && this.hasUpdated) {
+    if (_changedProperties.has('isOn') && _changedProperties.get('isOn') !== this.isOn) {
+      globalThis.client.pubsub.publish('entity-state-action', this.toJson())
+    }
+
+    if (_changedProperties.has('brightness') && _changedProperties.get('brightness') !== this.brightness) {
       globalThis.client.pubsub.publish('entity-state-action', this.toJson())
     }
   }
 
-  action() {
-    globalThis.client.pubsub.publish('entity-state-action', this.toJson())
+  #oninput = (event) => {
+    this.brightness = event.target.value
   }
-  // protected async firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-  //   if (_changedProperties.get('isOn')) {
-  //     await this.shadowRoot.querySelector('custom-toggle-button').updateComplete
-  //     await this.shadowRoot.querySelector('custom-toggle-button').active = this.isOn ? 1 : 0
-  //     // this.isOn ? this.controller.turnOn(this.brightness) : this.controller.turnOff()
-  //   }
-  // }
 
   updateState(state: any): void {
     this.isOn = state.isOn
@@ -72,7 +69,10 @@ class DimmableElement extends Dimmable(LitElement) {
         </flex-row>
         
         <flex-row slot="end">
-        <md-slider labeled value=${this.brightness}
+        <md-slider 
+          labeled
+          value=${this.brightness}
+          @input=${this.#oninput}
           aria-label="${this.name} brightness, current  brightness ${this.brightness}"
         ></md-slider>
         <custom-toggle-button data-variant="button" @active=${({detail}) => this.isOn = detail === 1 ? true : false} .active=${this.isOn === true ? 1 : 0} togglers='["lightbulb", "filled_lightbulb"]'>

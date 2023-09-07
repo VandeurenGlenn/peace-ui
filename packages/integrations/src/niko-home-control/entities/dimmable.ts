@@ -53,7 +53,7 @@ export default class NikoHomeControlDimmable extends Dimmable() {
    * @param state see niko-home-control
    */
   updateState(data: any): void {
-    super.updateState(this.transform(data))
+    super.updateState(data)
   }
 
   setState(data: any): void {

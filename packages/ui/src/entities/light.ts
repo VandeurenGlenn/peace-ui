@@ -23,6 +23,12 @@ class LightEl extends Light(LitElement) {
   @property({ type: Boolean })
   isOn: boolean
 
+  protected willUpdate(_changedProperties) {
+    if (_changedProperties.has('isOn') && _changedProperties.get('isOn') !== this.isOn && this.hasUpdated) {
+      globalThis.client.pubsub.publish('entity-state-action', this.toJson())
+    }
+  }
+
   updateState(state: any): void {
     super.updateState(state)
   }

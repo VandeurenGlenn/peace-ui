@@ -45,7 +45,7 @@ export default class NikoHomeControlLight extends Light() {
    * @param state see niko-home-control
    */
   updateState(data: any): void {
-    super.updateState(this.transform(data))
+    super.updateState(data)
   }
 
   /**
@@ -58,7 +58,7 @@ export default class NikoHomeControlLight extends Light() {
 
   transform(data: any): {isOn: boolean} {
     return {
-      isOn: data.value1 > 0,
+      isOn: data.value1 > 0
     }
   }
 }

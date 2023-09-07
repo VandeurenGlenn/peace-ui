@@ -87,7 +87,7 @@ export class DashboardPanel extends LitElement {
           .isOpen=${item.isOpen}
           .name=${item.name}
           .device-info=${item.deviceInfo}
-          .brightness=${item.position}>
+          .position=${item.position}>
         </cover-element>
       `)}
       </dashboard-panel-card>

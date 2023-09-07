@@ -50,8 +50,21 @@ export default class NikoHomeControlCover extends Cover() {
    * @param state see niko-home-control
    */
   updateState(data: any): void {
-    super.updateState({
+    super.updateState(data)
+  }
+
+  setState(data: any): void {
+    super.setState(this.transform(data))
+  }
+
+  /**
+   * transforms to easy-home readable properties
+   * @param data {} integration specific data 
+   * @returns 
+   */
+  transform(data: any): {position} {
+    return {
       position: data.value1
-    })
+    }
   }
 }

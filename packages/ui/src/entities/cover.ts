@@ -25,8 +25,24 @@ class CoverEl extends Cover(LitElement) {
   @property({ type: Number })
   position: number
 
+  protected willUpdate(_changedProperties) {
+    if (!this.hasUpdated) return
+
+    if (_changedProperties.has('position') && _changedProperties.get('position') !== this.position) {
+      globalThis.client.pubsub.publish('entity-state-action', this.toJson())
+    }
+
+    if (_changedProperties.has('isOpen') && _changedProperties.get('isOpen') !== this.isOpen) {
+      globalThis.client.pubsub.publish('entity-state-action', this.toJson())
+    }
+  }
+
   updateState(state: any): void {
     super.updateState(state)
+  }
+
+  #oninput = (event) => {
+    this.position = event.target.value
   }
 
   render() {
@@ -37,10 +53,11 @@ class CoverEl extends Cover(LitElement) {
       </flex-row>
       
       <flex-row slot="end">
-      <md-slider labeled value=${this.brightness}
-        aria-label="${this.name} brightness, current  brightness ${this.brightness}"
+      <md-slider labeled value=${this.position}
+        @input=${this.#oninput}
+        aria-label="${this.name} position, current  position ${this.position}"
       ></md-slider>
-      <custom-toggle-button data-variant="button" @active=${({detail}) => this.isOn = detail === 1 ? true : false} .active=${this.isOn === true ? 1 : 0} togglers='["roller_shades_closed", "roller_shades"]'>
+      <custom-toggle-button data-variant="button" @active=${({detail}) => this.isOpen = detail === 1 ? true : false} .active=${this.isOpen === true ? 1 : 0} togglers='["roller_shades_closed", "roller_shades"]'>
       </custom-toggle-button>
       </flex-row>
       
