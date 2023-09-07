@@ -46,13 +46,23 @@ export default class NikoHomeControlCover extends Cover() {
   }
 
   /**
-   * update state after the event comes in from the controller
+   * update state after the event comes in from the ui
    * @param state see niko-home-control
    */
   updateState(data: any): void {
     super.updateState(data)
   }
 
+  // temp override 
+  override trackPosition(position: any) {
+    this.position = position
+    if (this.position > 0) this.open() 
+    else this.close()
+  }
+
+  /**
+   * update state after the event comes in from the controller
+   */
   setState(data: any): void {
     super.setState(this.transform(data))
   }
