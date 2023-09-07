@@ -71,7 +71,7 @@ export default class Router {
       // if (history.state !== selected) history.pushState({selected}, selected, `#!/${selection ? `${selected}?selected=${selection}` : selected}`);
       this.select(paths, selection, routeInfo)
     }
-    if (!location.hash) location.hash = '#!/catalog/offers'
+    if (!location.hash) location.hash = '#!/dashboard'
     // @ts-ignore
     onhashchange()
   }
