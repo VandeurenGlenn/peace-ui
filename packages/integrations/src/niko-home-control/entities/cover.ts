@@ -50,18 +50,43 @@ export default class NikoHomeControlCover extends Cover() {
    * @param state see niko-home-control
    */
   updateState(data: any): void {
-    super.updateState(data)
+    // super.updateState(data)
+    if (data.isOpen) this.open()
+    else this.close()
+    if (data.position) this.position = data.value1
   }
 
-  // temp override 
-  trackPosition(position: any) {
-    const getter = async () => {
-      const actions = await easyHome.integrations['niko-home-control'].listActions()
-      this.position = actions.data.filter(data => String(data.id) === this.id)[0]?.value1 || 0
-    }
-    super.trackPosition(position, getter)
-    
-  }
+
+
+    /**
+     * tracks position change
+     * should add moving/position behavior for cover entities that just support up/down (open/close)
+     * @dev override if your integration has moving events integrated
+     */
+    // async trackPosition(position) {
+    //   this.moving = true
+    //   let trackTime = 5 * 60_000 // one minute
+
+
+    //   const checkPosition = () => setTimeout(async () => {
+    //     const actions = await easyHome.integrations['niko-home-control'].listActions()
+    //     this.position = actions.data.filter(data => String(data.id) === String(this.id))[0]?.value1 || 0
+
+    //     trackTime -= 1000
+  
+    //     if (trackTime === 0) return console.warning(`cover: ${this.uid} timedout`)
+    //     if (position !== this.position) {
+    //       return checkPosition()
+    //     }
+    //     this.moving = false
+    //     this.position = position
+    //     this.stop()
+    //   }, 1000)
+
+    //   this.open()
+      
+    //   return checkPosition()
+    // }
 
   /**
    * update state after the event comes in from the controller
