@@ -12,6 +12,13 @@ class NikoHomeControl extends Integration {
   controller: Controller
   options
 
+
+  deviceInfo = {
+    manufacturer: 'Niko',
+    description: `Your lighting, heating, ventilation, shutters, sun blinds and much more, controlled from 1 central place using a touchscreen, your tablet or smartphone: that is home automation.`,
+    website: 'https://www.niko.eu/en/products/niko-home-control'
+  }
+
   static defaultOptions = {
     host: '127.0.0.1',
     port: 8000,
@@ -23,8 +30,6 @@ class NikoHomeControl extends Integration {
     super('niko-home-control')
     this.options = options
   }
-
-  
 
   async getEntities() {
     const actions = await this.listActions()
@@ -63,6 +68,8 @@ class NikoHomeControl extends Integration {
     await this.getEntities()
     await this.controller.startEvents()
     this.controller.on('listactions', this.#onActions.bind(this));
+    // const systemInfo = await this.systemInfo()
+    // deviceInfo = { ...deviceInfo, ...systemInfo}
       // this.controller.on('getlive', this.#sync.bind(this));
       // Todo listen to getlive? let peace test
   }
@@ -83,7 +90,7 @@ class NikoHomeControl extends Integration {
     } catch (error) {
       pubsub.publish('entity-error', error)
     }
-    
+
     logEntityStateEvent({
       integration: this.name,
       entity: entity.toJson()
