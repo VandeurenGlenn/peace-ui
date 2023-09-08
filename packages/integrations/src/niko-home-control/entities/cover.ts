@@ -53,7 +53,7 @@ export default class NikoHomeControlCover extends Cover() {
     // super.updateState(data)
     if (data.isOpen) this.open()
     else this.close()
-    if (data.position) this.position = data.value1
+    if (data.value1 !== this.position) this.position = data.value1
   }
 
 
