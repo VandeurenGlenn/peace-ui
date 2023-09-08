@@ -21,8 +21,7 @@ export default class NikoHomeControlLight extends Light() {
   constructor(executer, data, uid?) {
     super({
       ...data,
-      value: data.value1,
-      isOn: data.value1 > 0,
+      isOn: Number(data.value1) > 0,
       uid
     })
     this.executeAction = executer
@@ -58,7 +57,7 @@ export default class NikoHomeControlLight extends Light() {
 
   transform(data: any): {isOn: boolean} {
     return {
-      isOn: data.value1 > 0
+      isOn: Number(data.value1) > 0
     }
   }
 }

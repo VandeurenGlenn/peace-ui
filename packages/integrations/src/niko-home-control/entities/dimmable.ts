@@ -22,8 +22,8 @@ export default class NikoHomeControlDimmable extends Dimmable() {
   constructor(executer, data, uid?) {
     super({
       ...data,
-      isOn: data.value1 > 0,
-      brightness: data.value1,
+      isOn: Number(data.value1) > 0,
+      brightness: Number(data.value1),
       uid
     })
     this.executeAction = executer
@@ -67,8 +67,8 @@ export default class NikoHomeControlDimmable extends Dimmable() {
    */
   transform(data: any): {brightness: number, isOn: boolean} {
     return {
-      brightness: data.value1,
-      isOn: data.value1 > 0,
+      brightness: Number(data.value1),
+      isOn: Number(data.value1) > 0,
     }
   }
 }

@@ -10,6 +10,7 @@ await configStore.init()
 if (!await configStore.has('integrations')) await configStore.put('integrations', objectToUint8Array({}))
 if (!await configStore.has('panels')) await configStore.put('panels', objectToUint8Array([]))
 
+easyHome.integrations = easyHome.integrations || {}
 export default class IntegrationsController {
   entityController = new EntityController()
   integrations: {
@@ -17,7 +18,7 @@ export default class IntegrationsController {
       entities: Entities,
       start: () => Promise<void>
     }
-  } = {}
+  } = easyHome.integrations
   panelsConfig = {}
   integrationsConfig = {}
   integrationSetups: IntegrationSetups = {}
@@ -71,6 +72,7 @@ export default class IntegrationsController {
       await this.integrations[integration].start()
       const entities = this.integrationsConfig[integration].entities
       this.integrations[integration].running = true
+      
       for (const entity of Object.values(this.integrations[integration].entities)) {
         if (entities?.[String(entity.id)]) {
           this.entityController.addEntity({...entity, integration})

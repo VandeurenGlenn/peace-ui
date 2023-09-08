@@ -34,24 +34,28 @@ export default (base = Dummy) => {
      * should add moving/position behavior for cover entities that just support up/down (open/close)
      * @dev override if your integration has moving events integrated
      */
-    trackPosition = (position) => {
+    async trackPosition(position, getter?) {
       this.moving = true
       let trackTime = 5 * 60_000 // one minute
 
-      const checkPosition = () => setTimeout(() => {
+      const checkPosition = () => setTimeout(async () => {
+        if (getter) {
+          await getter()
+        }
         trackTime -= 1000
   
         if (trackTime === 0) throw new Error(`cover: ${this.uid} timedout`)
         if (position !== this.position) {
           return checkPosition()
         }
-        this.stop()
         this.moving = false
+        this.position = position
+        this.stop()
       }, 1000)
 
       this.open()
       
-      checkPosition()
+      return checkPosition()
     }
 
     updateState(state) {
@@ -59,7 +63,7 @@ export default (base = Dummy) => {
       const position = state.position
       // don't overspam only track when position really changed and don't track when already tracking, just update the position
       if (position !== this.position && this.position !== undefined && !this.moving) {
-        this.trackPosition(position)
+        return this.trackPosition(position)
       } else {
         this.position = position
       }

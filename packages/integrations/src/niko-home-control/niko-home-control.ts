@@ -76,8 +76,13 @@ class NikoHomeControl extends Integration {
   #publishUpdate(action) {
     const entity = this.entities[String(action.id)]
     // setState doesn't perform actions like updateState does
-    entity.setState(entity)
-    console.log({action});
+    
+    try {
+      entity.setState(action)
+      console.log({action});
+    } catch (error) {
+      pubsub.publish('entity-error', error)
+    }
     
     logEntityStateEvent({
       integration: this.name,

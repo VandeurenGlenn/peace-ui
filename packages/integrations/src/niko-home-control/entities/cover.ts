@@ -22,7 +22,7 @@ export default class NikoHomeControlCover extends Cover() {
   constructor(executer, data, uid?) {
     super({
       ...data,
-      position: data.value1,
+      position: Number(data.value1),
       uid
     })
     this.executeAction = executer
@@ -54,10 +54,13 @@ export default class NikoHomeControlCover extends Cover() {
   }
 
   // temp override 
-  override trackPosition(position: any) {
-    this.position = position
-    if (this.position > 0) this.open() 
-    else this.close()
+  trackPosition(position: any) {
+    const getter = async () => {
+      const actions = await easyHome.integrations['niko-home-control'].listActions()
+      this.position = actions.data.filter(data => String(data.id) === this.id)[0]?.value1 || 0
+    }
+    super.trackPosition(position, getter)
+    
   }
 
   /**
@@ -74,7 +77,7 @@ export default class NikoHomeControlCover extends Cover() {
    */
   transform(data: any): {position} {
     return {
-      position: data.value1
+      position: Number(data.value1)
     }
   }
 }

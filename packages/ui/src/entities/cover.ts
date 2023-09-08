@@ -42,7 +42,7 @@ class CoverEl extends Cover(LitElement) {
   }
 
   #oninput = (event) => {
-    this.position = event.target.value
+    this.position = Number(event.target.value)
   }
 
   render() {
