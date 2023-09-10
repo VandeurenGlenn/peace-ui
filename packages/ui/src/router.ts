@@ -39,6 +39,16 @@ export default class Router {
         }
       }
     },
+    'automations': {
+      tag: 'automations-view',
+      import: 'automations',
+      subroutes: {
+        'automation': {
+          tag: 'automation-view',
+          import: 'automation'
+        }
+      }
+    },
     'dashboard': {
       tag: 'dashboard-view',
       import: 'dashboard'
@@ -105,6 +115,12 @@ export default class Router {
           this.host.supportedIntegrations = await this.host.client.supportedIntegrations()
         })())
         break;
+
+      case 'automations':
+        promises.push((async () => {
+          this.host.automations = await this.host.client.automations()
+        })())
+        break;
       default:
         break;
     }
@@ -138,6 +154,8 @@ export default class Router {
           this.host.integration = {...this.host.integrations[selection], ...this.host.supportedIntegrations[selection], originalName: selection}
           // await previous.requestUpdate()
           break;
+        case 'automation':
+          this.host.automation = this.host.automations[selection]
         default:
           break;
       }

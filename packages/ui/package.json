@@ -23,6 +23,7 @@
     "@lit-labs/virtualizer": "^2.0.7",
     "@vandeurenglenn/flex-elements": "^1.0.3",
     "custom-element-decorator": "^0.6.0",
-    "javascript-time-ago": "^2.5.9"
+    "javascript-time-ago": "^2.5.9",
+    "web-time-picker": "^0.1.8"
   }
 }

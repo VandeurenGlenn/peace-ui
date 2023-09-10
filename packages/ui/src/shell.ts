@@ -22,6 +22,7 @@ import { Panels, PanelsContext } from './context/panels.js'
 import { IntegrationConfigEntries, IntegrationsContext } from './context/integrations.js'
 import { SupportedIntegrationsContext, SupportedIntegrations } from './context/supported-integrations.js'
 import { map } from 'lit/directives/map.js'
+import './elements/dialogs/automation-setup.js'
 
 
 // Todo: be lazy
@@ -30,6 +31,7 @@ import Router from './router.js'
 import { IntegrationConfigEntry, IntegrationContext } from './context/integration.js'
 import { Logs, LogsContext } from './context/logs.js'
 import { Entities, EntitiesContext } from './context/entities.js'
+import { Automations, AutomationsContext } from './context/automations.js'
 
 export default class AppShell extends LitElement {
   client: Client
@@ -57,7 +59,8 @@ export default class AppShell extends LitElement {
   #panelsContextProvider = new ContextProvider(this, {context: PanelsContext});
   #integrationContextProvider = new ContextProvider(this, {context: IntegrationContext});
   #logsContextProvider = new ContextProvider(this, {context: LogsContext, initialValue: [] });
-  #entitiesContextProvider = new ContextProvider(this, { context: EntitiesContext})
+  #AutomationsContextProvider = new ContextProvider(this, { context: AutomationsContext})
+  #EntitiesContextProvider = new ContextProvider(this, { context: EntitiesContext})
 
   set supportedIntegrations(value: typeof SupportedIntegrations) {
     this.#supportedIntegrationsContextProvider.setValue(value)
@@ -104,13 +107,22 @@ export default class AppShell extends LitElement {
     return this.#logsContextProvider.value
   }
 
+  set automations(value: Automations) {
+    this.#AutomationsContextProvider.setValue(value)
+    this.#AutomationsContextProvider.updateObservers()
+  }
+
+  get automations() {
+    return this.#AutomationsContextProvider.value
+  }
+
   set entities(value: Entities) {
-    this.#entitiesContextProvider.setValue(value)
-    this.#entitiesContextProvider.updateObservers()
+    this.#EntitiesContextProvider.setValue(value)
+    this.#EntitiesContextProvider.updateObservers()
   }
 
   get entities() {
-    return this.#entitiesContextProvider.value
+    return this.#EntitiesContextProvider.value
   }
 
   protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -279,6 +291,7 @@ export default class AppShell extends LitElement {
         <span name="roller_shades">@symbol-roller_shades</span>
         <span name="delete">@symbol-delete</span>
         <span name="roller_shades_closed">@symbol-roller_shades_closed</span>
+        <span name="precision_manufacturing">@symbol-precision_manufacturing</span>
         <span name="filled_lightbulb">@filledsymbol-lightbulb</span>
       </template>
     </custom-icon-set>
@@ -308,6 +321,11 @@ export default class AppShell extends LitElement {
           <custom-icon slot="icon">devices_other</custom-icon>
           integrations
         </custom-drawer-item>
+
+        <custom-drawer-item name="automations">
+          <custom-icon slot="icon">precision_manufacturing</custom-icon>
+          automations
+        </custom-drawer-item>
         
 
         <flex-it></flex-it>
@@ -324,10 +342,13 @@ export default class AppShell extends LitElement {
         <custom-pages attr-for-selected="route">
           <dashboard-view route="dashboard"></dashboard-view>
           <integrations-view route="integrations"></integrations-view>
+          <automations-view route="automations"></automations-view>
           <logs-view route="logs"></logs-view>
           <settings-view route="settings"></settings-view>
         </custom-pages>
     </custom-drawer-layout>
+
+    <automation-setup-dialog></automation-setup-dialog>
 
     <integration-dialog></integration-dialog>
 

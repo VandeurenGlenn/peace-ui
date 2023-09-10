@@ -144,12 +144,6 @@ class ApiServer {
       integrationRunning: async (params, {send}) => {
         send(await this.integrationsController.integrationRunning(params.integration))
       },
-      interact: async (params, {send}) => {
-        const integration = this.integrations[params.integration]
-
-        integration.executeAction(params.id, params.value)
-        send('ok')
-      },
       entities: async ({send}) => {
         try {
           let entities = {}
@@ -175,24 +169,16 @@ class ApiServer {
     pubsub.publish('easy-home-server-ready', true)
     this.starting = false
     pubsub.subscribe('entity-state-action', state => {
-      console.log({state});
       const entityInfo = this.integrationsController.entityController.getEntity(state.uid)
-      console.log(entityInfo);
       if (entityInfo.integration && entityInfo.entityId) {
         const entity = this.integrations[entityInfo.integration].entities[entityInfo.entityId]
-        console.log(entity);
-        
         try {
           entity.updateState(state)
-          console.log(entity);
         } catch (error) {
           pubsub.publish('entity-error', error)
         }
       }
-      
     })
-    
   }
-  
 }
 export default ApiServer
