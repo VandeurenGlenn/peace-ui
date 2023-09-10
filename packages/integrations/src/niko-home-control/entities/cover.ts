@@ -51,13 +51,11 @@ export default class NikoHomeControlCover extends Cover() {
    * @param state see niko-home-control
    */
   updateState(data: any): void {
-    console.log({data});
-    
-    // super.updateState(data)
-    if (data.isOpen) this.open()
-    else this.close()
-    if (data.value1 && data.value1 !== this.position && data.value1 < 101) {
-      this.position = data.value1
+    if (this.moving) return
+    if (!this.moving && data.position !== this.position) {
+      this.trackPosition(data.position)
+    } else {
+      super.updateState(data)
     }
   }
 
@@ -65,15 +63,8 @@ export default class NikoHomeControlCover extends Cover() {
    * update state after the event comes in from the controller
    */
   setState(data: any): void {
-    if (this.moving) return
-    if (!this.moving && data.position !== this.position) {
-      this.trackPosition(data.position)
-    } else {
-      super.setState(this.transform(data))
-    }
+    super.setState(this.transform(data))
   }
-
-
 
     /**
      * tracks position change
