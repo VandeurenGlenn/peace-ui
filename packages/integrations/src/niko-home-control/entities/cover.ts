@@ -51,6 +51,8 @@ export default class NikoHomeControlCover extends Cover() {
    * @param state see niko-home-control
    */
   updateState(data: any): void {
+    console.log({data});
+    
     // super.updateState(data)
     if (data.isOpen) this.open()
     else this.close()
