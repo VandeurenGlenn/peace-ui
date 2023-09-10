@@ -39,7 +39,7 @@ export default (base = Dummy) => {
 
     setState(state: any): void {
       super.setState(state)
-      if (state.position) this.position = state.position
+      if (state.position && this.position !== state.position) this.position = state.position
     }
 
     toJson() {
