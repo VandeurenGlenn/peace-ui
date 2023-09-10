@@ -82,8 +82,7 @@ export default class NikoHomeControlCover extends Cover() {
   
         if (trackTime === 0) return console.warn(`cover: ${this.uid} timedout`)
         if (position !== this.position) {
-          if (up && this.position < position || !up && this.position > position)
-          return checkPosition()
+          if (up && this.position < position || !up && this.position > position) return checkPosition()
         }
         this.moving = false
         this.position = position
