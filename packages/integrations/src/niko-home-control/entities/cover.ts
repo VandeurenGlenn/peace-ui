@@ -59,6 +59,18 @@ export default class NikoHomeControlCover extends Cover() {
     }
   }
 
+  /**
+   * update state after the event comes in from the controller
+   */
+  setState(data: any): void {
+    if (this.moving) return
+    if (!this.moving && data.position !== this.position) {
+      this.trackPosition(data.position)
+    } else {
+      super.setState(this.transform(data))
+    }
+  }
+
 
 
     /**
@@ -93,18 +105,6 @@ export default class NikoHomeControlCover extends Cover() {
       
       return checkPosition()
     }
-
-  /**
-   * update state after the event comes in from the controller
-   */
-  setState(data: any): void {
-    if (this.moving) return
-    if (!this.moving && data.position !== this.position) {
-      this.trackPosition(data.position)
-    } else {
-      super.setState(this.transform(data))
-    }
-  }
 
   /**
    * transforms to easy-home readable properties

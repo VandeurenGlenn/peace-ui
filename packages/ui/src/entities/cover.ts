@@ -42,7 +42,12 @@ class CoverEl extends Cover(LitElement) {
   }
 
   #oninput = (event) => {
-    this.position = Number(event.target.value)
+    if (this.timeout) clearTimeout(this.timeout)
+
+    this.timeout =
+      setTimeout(() => {
+        this.position = Number(this.shadowRoot.querySelector('md-slider').value)
+      }, 500)
   }
 
   render() {
