@@ -42,8 +42,6 @@ class ApiServer {
     return this.integrationsController.integrations
   }
 
-
-
   async init() {
     await this.integrationsController.init()
 

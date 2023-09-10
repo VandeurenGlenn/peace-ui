@@ -1,5 +1,6 @@
 import { Cover } from "@easy-home/entities";
 import NikoHomeControl from "./../niko-home-control.js";
+import { logEntityStateEvent } from "@easy-home/logging";
 
 /**
  * Representation of a niko home control blind/cover etc
@@ -53,7 +54,9 @@ export default class NikoHomeControlCover extends Cover() {
     // super.updateState(data)
     if (data.isOpen) this.open()
     else this.close()
-    if (data.value1 && data.value1 !== this.position && data.value1 < 101) this.position = data.value1
+    if (data.value1 && data.value1 !== this.position && data.value1 < 101) {
+      this.position = data.value1
+    }
   }
 
 
@@ -63,36 +66,45 @@ export default class NikoHomeControlCover extends Cover() {
      * should add moving/position behavior for cover entities that just support up/down (open/close)
      * @dev override if your integration has moving events integrated
      */
-    // async trackPosition(position) {
-    //   this.moving = true
-    //   let trackTime = 5 * 60_000 // one minute
+    async trackPosition(position) {
+      this.moving = true
+      let trackTime = 5 * 60_000 // one minute
+      const up = position > this.position
 
-
-    //   const checkPosition = () => setTimeout(async () => {
-    //     const actions = await easyHome.integrations['niko-home-control'].listActions()
-    //     this.position = actions.data.filter(data => String(data.id) === String(this.id))[0]?.value1 || 0
-
-    //     trackTime -= 1000
+      const checkPosition = () => setTimeout(async () => {
+        const actions = await easyHome.integrations['niko-home-control'].listActions()
+        const action = actions.data.filter(data => String(data.id) === String(this.id))[0]
+        if (!action) return console.error('no action found')
+        this.position = Number(action.value1)
+        logEntityStateEvent({integration: 'niko-home-control', entity: this.toJson()}, 'change')
+        
+        trackTime -= 1000
   
-    //     if (trackTime === 0) return console.warning(`cover: ${this.uid} timedout`)
-    //     if (position !== this.position) {
-    //       return checkPosition()
-    //     }
-    //     this.moving = false
-    //     this.position = position
-    //     this.stop()
-    //   }, 1000)
+        if (trackTime === 0) return console.warn(`cover: ${this.uid} timedout`)
+        if (position !== this.position) {
+          if (up && this.position < position || !up && this.position > position)
+          return checkPosition()
+        }
+        this.moving = false
+        this.position = position
+        this.stop()
+      }, 1000)
 
-    //   this.open()
+      this.open()
       
-    //   return checkPosition()
-    // }
+      return checkPosition()
+    }
 
   /**
    * update state after the event comes in from the controller
    */
   setState(data: any): void {
-    super.setState(this.transform(data))
+    if (this.moving) return
+    if (!this.moving && data.position !== this.position) {
+      this.trackPosition(data.position)
+    } else {
+      super.setState(this.transform(data))
+    }
   }
 
   /**
