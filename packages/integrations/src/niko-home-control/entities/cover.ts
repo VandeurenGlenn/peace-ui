@@ -94,7 +94,8 @@ export default class NikoHomeControlCover extends Cover() {
         this.stop()
       }, 1000)
 
-      this.open()
+      if (up) this.open()
+      else this.close()
       
       return checkPosition()
     }

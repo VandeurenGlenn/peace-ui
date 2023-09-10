@@ -31,19 +31,9 @@ export default (base = Dummy) => {
 
     updateState(state) {
       super.updateState(state)
-      const position = state.position
-      // don't overspam only track when position really changed and don't track when already tracking, just update the position
-      if (position !== this.position && this.position !== undefined && !this.moving) {
-        if (this.trackPosition) return this.trackPosition(position)
-        this.position = position
-      } else {
-        this.position = position
-      }
-      if (!position) {
-        if (state.isOpen !== this.isOpen) {
-          if (!state.isOpen) this.close()
-          else this.open()
-        } 
+      if (state.isOpen !== this.isOpen && !this.moving) {
+        if (!state.isOpen) this.close()
+        else this.open()
       }
     }
 
